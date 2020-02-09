@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+
+  node:
+    image: tekz/serverless-monitor:13.6.0
+    restart: unless-stopped
+    volumes:
+      - .:/home/app

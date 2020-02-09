@@ -1,0 +1,17 @@
+{
+  "name": "serverless-monitor",
+  "version": "1.0.0",
+  "description": "AWS Lambda - Check HTTP response code & latency for scheduled endpoints & send alerts to Slack",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo 'no tests :('"
+  },
+  "author": "Akki Khare",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.548.0"
+  }
+}

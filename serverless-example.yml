@@ -9,19 +9,20 @@ provider:
   runtime: nodejs12.x
 
   # IAM Permissions
-  # We need to create metrics inside CloudWatch
-  # Also CRUD of DynamoDB
   iamRoleStatements:
-    - Effect: "Allow"
+    - Effect: Allow
       Action:
         - cloudwatch:PutMetricData
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
       Resource: "*"
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource: arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/lambda-monitor-${opt:stage}
+    - Effect: Allow
+      Action:
+        - SNS:Publish
+      Resource: arn:aws:sns:${opt:region, self:provider.region}:*:lambda-monitor-${opt:stage}
 
 resources:
   Description: Check HTTP response code & latency for scheduled endpoints & send alerts to Slack

@@ -14,6 +14,11 @@
 - 100% Serverless
 - Unlimited website monitoring
 - Slack alerts only when status is changed
+- SNS Topic Publish only on status change. SNS can send alerts via
+    - SMS/Text Message
+    - Email
+    - Push    
+    - etc.
 - Basic Cloudwatch Graphs and Metrics
 - Docker support For development environment
 - *Low cost monitoring
@@ -217,7 +222,7 @@ Logged metrics in Cloudwatch at: serverless-monitor
 
 **Text Alerts**
 
-<img src="https://raw.githubusercontent.com/akki-io/serverless-monitor/master/images/sms.jpg" alt="serverless-monitor-text">
+<img src="https://raw.githubusercontent.com/akki-io/serverless-monitor/master/images/sms.png" alt="serverless-monitor-text">
 
 **Email Alerts**
 

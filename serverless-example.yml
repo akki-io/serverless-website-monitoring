@@ -9,19 +9,20 @@ provider:
   runtime: nodejs12.x
 
   # IAM Permissions
-  # We need to create metrics inside CloudWatch
-  # Also CRUD of DynamoDB
   iamRoleStatements:
-    - Effect: "Allow"
+    - Effect: Allow
       Action:
         - cloudwatch:PutMetricData
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
       Resource: "*"
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource: arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/lambda-monitor-${opt:stage}
+    - Effect: Allow
+      Action:
+        - SNS:Publish
+      Resource: arn:aws:sns:${opt:region, self:provider.region}:*:lambda-monitor-${opt:stage}
 
 resources:
   Description: Check HTTP response code & latency for scheduled endpoints & send alerts to Slack
@@ -37,6 +38,11 @@ resources:
             KeyType: HASH
         TableName: lambda-monitor-${opt:stage}
         BillingMode: PAY_PER_REQUEST
+    MonitorSnsTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: lambda-monitor-${opt:stage}
+        TopicName: lambda-monitor-${opt:stage}
 
 # We only have the one function. In future we may add others, eg new protocol
 # support if ICMP ever becomes possible on Lambda.
@@ -46,6 +52,7 @@ functions:
     environment:
       stage: ${opt:stage}
       slackWebhookUrl: UPDATE_YOUR_SLACK_WEBHOOK HERE # https://slack.com/intl/en-ca/help/articles/115005265063-Incoming-Webhooks-for-Slack
+      awsAccountId: UPDATE_YOUR_AWS_ACCOUNT_ID_HERE
     description: "Perform an HTTP request to 'ping' a remote server to determine availability"
     memorySize: 128 # MB
     timeout: 30 # seconds

@@ -12,8 +12,10 @@ let docClient = new AWS.DynamoDB.DocumentClient();
 // declare variables
 const ENDPOINT_TIMEOUT = 5000; // milliseconds
 const SLACK_WEBHOOK_URL = process.env.slackWebhookUrl;
+const AWS_REGION = process.env.AWS_REGION;
+const DYNAMO_TABLE = "lambda-monitor-" + process.env.stage;
+const SNS_TOPIC_ARN = "arn:aws:sns:" + AWS_REGION + ":" + process.env.awsAccountId + ":" + "lambda-monitor-" + process.env.stage;
 let cloudWatchOutput = {};
-let dynamoTable = "lambda-monitor-" + process.env.stage;
 
 // main function
 module.exports.http = (event, context, callback) => {
@@ -61,6 +63,7 @@ module.exports.http = (event, context, callback) => {
                 if (newStatusCode !== oldStatusCode) {
                     sendSlackAlert(endpoint, newStatusCode);
                     updateDynamo(endpoint, cloudWatchOutput[ endpoint ]);
+                    publishMessageSns(endpoint, newStatusCode);
                 }
 
                 // update cloud watch
@@ -74,7 +77,7 @@ module.exports.http = (event, context, callback) => {
     // get record from dynamodb
     async function getDynamoDbRecord(endpoint) {
         let params = {
-            TableName: dynamoTable,
+            TableName: DYNAMO_TABLE,
             Key: {
                 "endpoint": endpoint
             }
@@ -85,7 +88,7 @@ module.exports.http = (event, context, callback) => {
     // update the item, unconditionally, inside dynamodb
     function updateDynamo(endpoint, values) {
         let params = {
-            TableName: dynamoTable,
+            TableName: DYNAMO_TABLE,
             Key:{
                 "endpoint": endpoint
             },
@@ -149,6 +152,35 @@ module.exports.http = (event, context, callback) => {
             req.write(messageBody);
             req.end();
         });
+    }
+
+    // publish message to sns
+    function publishMessageSns(endpoint, statusCode)
+    {
+        let message = endpoint + " is up";
+
+        // if service is down
+        if (statusCode !== 200) {
+            message = endpoint + " is down";
+        }
+
+        let params = {
+            Message: message,
+            Subject: message,
+            TopicArn: SNS_TOPIC_ARN
+        };
+
+        // publish message
+        let publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
+
+        // handle promise's fulfilled/rejected states
+        publishTextPromise.then(
+            function(data) {
+                console.log(`Message ${params.Message} send sent to the topic ${params.TopicArn}`);
+            }).catch(
+            function(err) {
+                console.error(err, err.stack);
+            });
     }
 
     // push metrics to cloudWatch.

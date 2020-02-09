@@ -61,12 +61,24 @@ aws configure
 
 ### Update `serverless.yml`
 
+Copy `serverless-example.yml` to `serverless.yml`
+
+```shell script
+cp serverless-example.yml serverless.yml
+```
+
 Configure a slack incoming webhook and update `slackWebhookUrl`
 
 ```yaml
-environment:
-    stage: ${opt:stage}
+environment:    
     slackWebhookUrl: UPDATE_YOUR_SLACK_WEBHOOK HERE # https://slack.com/intl/en-ca/help/articles/115005265063-Incoming-Webhooks-for-Slack
+```
+
+Enter your AWS account Id
+
+```yaml
+environment:    
+    awsAccountId: UPDATE_YOUR_AWS_ACCOUNT_ID_HERE
 ```
 
 Update your website/api urls under `input`
@@ -130,6 +142,11 @@ A quick look at the Resources created by AWS using CloudFormation
 
 <img src="https://raw.githubusercontent.com/akki-io/serverless-monitor/master/images/resources.jpg" alt="serverless-monitor-resources">
 
+## Adding Subscriptions to the SNS Topic
+
+This tool creates a empty topic without any subscriptions attached. You can add your own subscriptions like email, SMS etc.
+
+<img src="https://raw.githubusercontent.com/akki-io/serverless-monitor/master/images/sns-subscription.jpg" alt="serverless-monitor-sns-subscription">
 
 ## Local Tinkering
 
@@ -198,6 +215,13 @@ Logged metrics in Cloudwatch at: serverless-monitor
 
 <img src="https://raw.githubusercontent.com/akki-io/serverless-monitor/master/images/chart.jpg" alt="serverless-monitor-resources">
 
+**Text Alerts**
+
+<img src="https://raw.githubusercontent.com/akki-io/serverless-monitor/master/images/sms.jpg" alt="serverless-monitor-text">
+
+**Email Alerts**
+
+<img src="https://raw.githubusercontent.com/akki-io/serverless-monitor/master/images/email.jpg" alt="serverless-monitor-email">
 
 ## Contributions
 All contributions are welcomed, please create a Pull Request.
@@ -207,7 +231,7 @@ All contributions are welcomed, please create a Pull Request.
 
 ## Todo
 
-- AWS SNS subscription
+- ~~AWS SNS Topic~~ - https://github.com/akki-io/serverless-monitor/pull/1/
 - Maybe Cost Estimation
 - ... suggestions?
 

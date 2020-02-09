@@ -37,6 +37,11 @@ resources:
             KeyType: HASH
         TableName: lambda-monitor-${opt:stage}
         BillingMode: PAY_PER_REQUEST
+    MonitorSnsTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: lambda-monitor-${opt:stage}
+        TopicName: lambda-monitor-${opt:stage}
 
 # We only have the one function. In future we may add others, eg new protocol
 # support if ICMP ever becomes possible on Lambda.
@@ -46,6 +51,7 @@ functions:
     environment:
       stage: ${opt:stage}
       slackWebhookUrl: UPDATE_YOUR_SLACK_WEBHOOK HERE # https://slack.com/intl/en-ca/help/articles/115005265063-Incoming-Webhooks-for-Slack
+      awsAccountId: UPDATE_YOUR_AWS_ACCOUNT_ID_HERE
     description: "Perform an HTTP request to 'ping' a remote server to determine availability"
     memorySize: 128 # MB
     timeout: 30 # seconds

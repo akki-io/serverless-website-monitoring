@@ -23,13 +23,50 @@
 - Docker support For development environment
 - *Low cost monitoring
 
+## Cost Estimation
+
+Below is quick cost estimation of using this tool. The are just sample cost estimation. Please note these prices cannot be used as a final or real  price for using this tool and can vary depending on the configuration.
+
+**Please do your own research and check AWS pricing before using the tool.**   
+
+### Assumptions
+
+- Paid tier
+- Scheduler runs every 5 minutes
+- Lambda function timeout set to 30 seconds
+- Lambda function uses max 128 MB Memory
+- Lambda number of request is 8640
+- Lambda request duration is 30000 ms
+- 500 Text Message (United States) per month
+- 500 Email per month
+- Cost is per month
+
+### With CloudWatch Metrics 
+
+| #| Endpoints | Lambda Cost | Metrics | DynamoDB | SNS  | Total  |
+|------|------|------|------|------|------|------|
+| 1 | 10   | $0.54  | $3   | $0 | $3.235 | $6.775   |
+| 2 | 50   | $0.54  | $15  | $0 | $3.235 | $18.775  |
+| 3 | 100  | $0.54  | $30  | $0 | $3.235 | $33.775  |
+| 4 | 500  | $0.54  | $150 | $0 | $3.235 | $153.775 |
+
+
+### Without CloudWatch Metrics
+
+| #| Endpoints | Lambda Cost | Metrics | DynamoDB | SNS  | Total  |
+|------|------|------|------|------|------|------|
+| 1 | 10   | $0.54  | $0  | $0 | $3.235 | $3.775 |
+| 2 | 50   | $0.54  | $0  | $0 | $3.235 | $3.775 |
+| 3 | 100  | $0.54  | $0  | $0 | $3.235 | $3.775 |
+| 4 | 500  | $0.54  | $0  | $0 | $3.235 | $3.775 |
+
+
 ## Prerequisite
 
 - [AWS Account](https://aws.amazon.com/)
 - [nodeJs](https://nodejs.org/en/) OR docker with docker-compose 
 - [AWS CLI](https://aws.amazon.com/cli/) OR docker with docker-compose 
 - [Serverless Framework]() OR docker with docker-compose 
-
 
 ## Getting Started
 

@@ -295,7 +295,7 @@ All contributions are welcomed, please create a Pull Request.
 - Enable/Disable Metrics
 - Enable/Disable Slack
 - Custom Success Status Code
-- Cost Estimation
+- ~~Cost Estimation~~ - [Link](https://github.com/akki-io/serverless-monitor/pull/2)
 - ... suggestions?
 
 ## Donations

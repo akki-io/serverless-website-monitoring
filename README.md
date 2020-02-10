@@ -25,7 +25,7 @@
 
 ## Cost Estimation
 
-Below is quick cost estimation of using this tool. The are just sample cost estimation. Please note these prices cannot be used as a final or real  price for using this tool and can vary depending on the configuration.
+Below is quick cost estimation of using this tool. These are just sample cost estimation. Please note these prices cannot be used as a final or real  price for using this tool and can vary depending on the configuration.
 
 **Please do your own research and check AWS pricing before using the tool.**   
 

@@ -147,6 +147,24 @@ A quick look at the Resources created by AWS using CloudFormation
 
 <img src="https://raw.githubusercontent.com/akki-io/serverless-monitor/master/images/resources.jpg" alt="serverless-monitor-resources">
 
+## Add new website/api or deploying changes 
+
+If you made changes to the `serverless.yml` or added new inputs for website/API. 
+
+You can simply call this command to update the existing stack.
+
+### With Docker
+
+```shell script
+docker-compose exec node serverless deploy --stage prod --region us-east-1
+```
+
+### Without Docker
+
+```shell script
+serverless deploy --stage prod --region us-east-1
+```
+
 ## Adding Subscriptions to the SNS Topic
 
 This tool creates a empty topic without any subscriptions attached. You can add your own subscriptions like email, SMS etc.
@@ -236,8 +254,11 @@ All contributions are welcomed, please create a Pull Request.
 
 ## Todo
 
-- ~~AWS SNS Topic~~ - https://github.com/akki-io/serverless-monitor/pull/1/
-- Maybe Cost Estimation
+- ~~AWS SNS Topic~~ - [Link](https://github.com/akki-io/serverless-monitor/pull/1/)
+- Enable/Disable Metrics
+- Enable/Disable Slack
+- Custom Success Status Code
+- Cost Estimation
 - ... suggestions?
 
 ## Donations

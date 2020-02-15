@@ -123,6 +123,13 @@ environment:
     awsAccountId: UPDATE_YOUR_AWS_ACCOUNT_ID_HERE
 ```
 
+If you want to disable cloud metrics set `enableMetrics` to `false` in `serverless.yml`
+
+```yaml
+environment:    
+    enableMetrics: false
+```
+
 Update your website/api urls under `input`
 
 ```yaml
@@ -291,11 +298,11 @@ All contributions are welcomed, please create a Pull Request.
 
 ## Todo
 
-- ~~AWS SNS Topic~~ - [Link](https://github.com/akki-io/serverless-monitor/pull/1/)
-- Enable/Disable Metrics
+- ~~AWS SNS Topic~~
+- ~~Enable/Disable Metrics~~
 - Enable/Disable Slack
 - Custom Success Status Code
-- ~~Cost Estimation~~ - [Link](https://github.com/akki-io/serverless-monitor/pull/2)
+- ~~Cost Estimation~~
 - ... suggestions?
 
 ## Donations

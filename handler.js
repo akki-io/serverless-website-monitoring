@@ -14,6 +14,7 @@ const ENDPOINT_TIMEOUT = 5000; // milliseconds
 const SLACK_WEBHOOK_URL = process.env.slackWebhookUrl;
 const AWS_REGION = process.env.AWS_REGION;
 const DYNAMO_TABLE = "lambda-monitor-" + process.env.stage;
+const ENABLE_METRICS = process.env.enableMetrics || true;
 const SNS_TOPIC_ARN = "arn:aws:sns:" + AWS_REGION + ":" + process.env.awsAccountId + ":" + "lambda-monitor-" + process.env.stage;
 let cloudWatchOutput = {};
 
@@ -67,7 +68,9 @@ module.exports.http = (event, context, callback) => {
                 }
 
                 // update cloud watch
-                updateCloudWatch(endpoint, cloudWatchOutput)
+                if (ENABLE_METRICS === true) {
+                    updateCloudWatch(endpoint, cloudWatchOutput)
+                }
             });
         });
     });

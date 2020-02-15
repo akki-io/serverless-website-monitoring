@@ -53,6 +53,7 @@ functions:
       stage: ${opt:stage}
       slackWebhookUrl: UPDATE_YOUR_SLACK_WEBHOOK HERE # https://slack.com/intl/en-ca/help/articles/115005265063-Incoming-Webhooks-for-Slack
       awsAccountId: UPDATE_YOUR_AWS_ACCOUNT_ID_HERE
+      enableMetrics: true
     description: "Perform an HTTP request to 'ping' a remote server to determine availability"
     memorySize: 128 # MB
     timeout: 30 # seconds

@@ -18,11 +18,15 @@ provider:
       Action:
         - dynamodb:GetItem
         - dynamodb:UpdateItem
-      Resource: arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/lambda-monitor-${opt:stage}
+      Resource:
+        Fn::GetAtt:
+          - MonitorDynamoDbTable
+          - Arn
     - Effect: Allow
       Action:
         - SNS:Publish
-      Resource: arn:aws:sns:${opt:region, self:provider.region}:*:lambda-monitor-${opt:stage}
+      Resource:
+        Ref: MonitorSnsTopic
 
 resources:
   Description: Check HTTP response code & latency for scheduled endpoints & send alerts to Slack
@@ -52,8 +56,11 @@ functions:
     environment:
       stage: ${opt:stage}
       slackWebhookUrl: UPDATE_YOUR_SLACK_WEBHOOK HERE # https://slack.com/intl/en-ca/help/articles/115005265063-Incoming-Webhooks-for-Slack
-      awsAccountId: UPDATE_YOUR_AWS_ACCOUNT_ID_HERE
       enableMetrics: true
+      snsTopicArn:
+        Ref: MonitorSnsTopic
+      dynamoTable:
+        Ref: MonitorDynamoDbTable
     description: "Perform an HTTP request to 'ping' a remote server to determine availability"
     memorySize: 128 # MB
     timeout: 30 # seconds

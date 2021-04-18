@@ -12,10 +12,9 @@ let docClient = new AWS.DynamoDB.DocumentClient();
 // declare variables
 const ENDPOINT_TIMEOUT = 5000; // milliseconds
 const SLACK_WEBHOOK_URL = process.env.slackWebhookUrl;
-const AWS_REGION = process.env.AWS_REGION;
-const DYNAMO_TABLE = "lambda-monitor-" + process.env.stage;
+const DYNAMO_TABLE = process.env.dynamoTable;
 const ENABLE_METRICS = process.env.enableMetrics || true;
-const SNS_TOPIC_ARN = "arn:aws:sns:" + AWS_REGION + ":" + process.env.awsAccountId + ":" + "lambda-monitor-" + process.env.stage;
+const SNS_TOPIC_ARN = process.env.snsTopicArn;
 let cloudWatchOutput = {};
 
 // main function

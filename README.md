@@ -116,13 +116,6 @@ environment:
     slackWebhookUrl: UPDATE_YOUR_SLACK_WEBHOOK HERE # https://slack.com/intl/en-ca/help/articles/115005265063-Incoming-Webhooks-for-Slack
 ```
 
-Enter your AWS account Id
-
-```yaml
-environment:    
-    awsAccountId: UPDATE_YOUR_AWS_ACCOUNT_ID_HERE
-```
-
 If you want to disable cloud metrics set `enableMetrics` to `false` in `serverless.yml`
 
 ```yaml
